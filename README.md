@@ -2,6 +2,14 @@
 
 Daxcsa Binary Tree is an Angular 19 application that visualizes hierarchical binary tree data using D3.js and the d3-org-chart library. The application fetches tree data from a local JSON file, processes it with D3’s hierarchy tools, and renders an interactive, responsive binary tree chart with rich node details.
 
+<img src="images/1.jpg" alt="Screenshot 1">
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <img src="images/2.jpg" alt="Screenshot 2" style="width: 32%;">
+  <img src="images/3.jpg" alt="Screenshot 3" style="width: 32%;">
+  <img src="images/4.jpg" alt="Screenshot 4" style="width: 32%;">
+</div>
+
 ## Table of Contents
 
 - [Overview](#overview)
