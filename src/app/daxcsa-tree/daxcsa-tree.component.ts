@@ -45,7 +45,7 @@ export class DaxcsaTreeComponent implements OnInit, AfterViewInit {
       console.log('Fetched data:', data);
       this.treeData = data;
       if (data && data.data && data.data.attributes && data.data.attributes.length > 0) {
-        // Use the first object as the root
+        // Use the first element as the root.
         this.currentRoot = data.data.attributes[0];
         this.renderChart();
       } else {
@@ -60,16 +60,13 @@ export class DaxcsaTreeComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // Flatten nested JSON data using d3.hierarchy.
+  // Flatten nested data using d3.hierarchy.
   flattenData(root: any): any[] {
-    // Create a hierarchy. d3.hierarchy automatically uses a function to access children.
     const hierarchy = d3.hierarchy(root, d => d.children);
-    // Map each node to a flat object and add a parentId property.
     const flat = hierarchy.descendants().map(n => ({
       ...n.data,
       depth: n.depth,
       height: n.height,
-      // If n.parent is null, then this is the root; set parentId to null.
       parentId: n.parent ? n.parent.data.distributor_id : null
     }));
     return flat;
@@ -88,11 +85,8 @@ export class DaxcsaTreeComponent implements OnInit, AfterViewInit {
 
     (new OrgChart() as any)
       .container(this.chartContainer.nativeElement)
-      // Pass the flat array of nodes
       .data(flatData)
-      // Specify the unique id accessor
       .nodeId((d: any) => d.distributor_id)
-      // Specify the parent id accessor so the chart can rebuild the hierarchy.
       .parentNodeId((d: any) => d.parentId)
       .nodeWidth(() => 250)
       .nodeHeight(() => 175)
@@ -100,25 +94,23 @@ export class DaxcsaTreeComponent implements OnInit, AfterViewInit {
       .compactMarginBetween(() => 15)
       .compactMarginPair(() => 80)
       .initialZoom(0.7)
+      // Use d.data.* to access the original node info.
       .nodeContent((d: any) => {
-        // Use a placeholder image if none is provided.
-        const imageUrl = d.imageUrl || 'https://cloudfront-us-east-2.images.arcpublishing.com/reuters/YEGVFNBR5ZIJTPY6BWUR4R2P2E.jpg';//'https://via.placeholder.com/60';
+        const info = d.data;
         return `
-          <div style="padding-top:30px;margin-left:1px;height:${175 + 32}px;border-radius:2px;overflow:visible">
-            <div style="height:${175}px;padding-top:0;background-color:white;border:1px solid lightgray;">
-              <img src="${imageUrl}"
-                   style="margin-top:-30px;margin-left:${(250 / 2 - 30)}px;border-radius:100px;width:60px;height:60px;" />
-              <div style="margin-right:10px;margin-top:15px;float:right">${d.distributor_id}</div>
-              <div style="margin-top:-30px;background-color:#3AB6E3;height:10px;width:${250 - 2}px;border-radius:1px"></div>
-              <div style="padding:20px; padding-top:35px;text-align:center">
-                <div style="color:#111672;font-size:16px;font-weight:bold">${d.full_name}</div>
-                <div style="color:#404040;font-size:16px;margin-top:4px">${d.username}</div>
-              </div>
-              <div style="display:flex;justify-content:space-between;padding-left:15px;padding-right:15px;">
-                <div>Manages: ${d.num_children} 👤</div>
-                <div>Oversees: N/A 👤</div>
-              </div>
+          <div style="padding: 10px; background: #fff; border: 1px solid #ddd; border-radius: 5px; width: 250px; font-family: Arial, sans-serif;">
+            <div style="text-align: center; font-weight: bold; font-size: 16px; color: #111672; margin-bottom: 5px;">
+              ${info.full_name}
             </div>
+            <div style="text-align: center; color: #404040; font-size: 14px; margin-bottom: 10px;">
+              ${info.username}
+            </div>
+            <div style="font-size: 13px; margin-bottom: 3px;"><strong>ID:</strong> ${info.distributor_id}</div>
+            <div style="font-size: 13px; margin-bottom: 3px;"><strong>Status:</strong> ${info.status}</div>
+            <div style="font-size: 13px; margin-bottom: 3px;"><strong>Product:</strong> ${info.product_name || 'N/A'}</div>
+            <div style="font-size: 13px; margin-bottom: 3px;"><strong>Category:</strong> ${info.category_name || 'N/A'}</div>
+            <div style="font-size: 13px; margin-bottom: 3px;"><strong>Binary:</strong> ${info.binary_placement}</div>
+            <div style="font-size: 13px;"><strong># Children:</strong> ${info.num_children}</div>
           </div>
         `;
       })
