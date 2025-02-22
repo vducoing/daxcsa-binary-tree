@@ -16,6 +16,20 @@ import { DaxcsaTreeComponent } from './daxcsa-tree/daxcsa-tree.component';
       max-width: 1200px;
       padding: 1rem;
     }
+    /* Medium devices */
+    @media (max-width: 768px) {
+      .app-container {
+        max-width: 90%;
+        padding: 0.75rem;
+      }
+    }
+    /* Small devices */
+    @media (max-width: 480px) {
+      .app-container {
+        max-width: 100%;
+        padding: 0.5rem;
+      }
+    }
   `]
 })
 export class AppComponent {
