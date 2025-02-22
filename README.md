@@ -54,7 +54,7 @@ Follow these steps to set up the project locally:
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/your-username/daxcsa-binary-tree.git
+   git clone https://github.com/vducoing/daxcsa-binary-tree.git
    cd daxcsa-binary-tree
    ```
 
