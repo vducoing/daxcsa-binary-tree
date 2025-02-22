@@ -1,0 +1,45 @@
+.binary-tree-container {
+  position: relative;
+  font-family: Arial, sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #555;
+  stroke-width: 2px;
+}
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 3px;
+  cursor: pointer;
+}
+
+.node text {
+  font: 12px sans-serif;
+  user-select: none;
+}
+
+/* The detail panel on the side */
+.detail-panel {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 220px;
+  background: #f7f7f7;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+/* Mobile-friendly adjustments */
+@media (max-width: 768px) {
+  svg {
+    width: 600px; /* or 100% with horizontal scrolling */
+  }
+  .detail-panel {
+    position: static;
+    margin: 1rem auto;
+  }
+}
